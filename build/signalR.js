@@ -436,7 +436,8 @@ var jQueryShim = require('./jQueryShim');
                 pingInterval: 300000,
                 waitForPageLoad: true,
                 transport: "auto",
-                jsonp: false
+                jsonp: false,
+                authToken: ''
             },
                 _initialize,
                 deferred = connection._deferral || $.Deferred(),
@@ -670,6 +671,7 @@ var jQueryShim = require('./jQueryShim');
             // Save the ajax negotiate request object so we can abort it if stop is called while the request is in flight.
             connection._.negotiateRequest = _signalR.transports._logic.ajax(connection, {
                 url: url,
+                token: config.authToken,
                 error: function error(_error, statusText) {
                     // We don't want to cause any errors if we're aborting our own negotiate request.
                     if (statusText !== _negotiateAbortText) {
@@ -1188,6 +1190,7 @@ var jQueryShim = require('./jQueryShim');
 
                 xhr = transportLogic.ajax(connection, {
                     url: url,
+                    token: config.authToken,
                     success: function success(result) {
                         var data;
 
@@ -1336,6 +1339,7 @@ var jQueryShim = require('./jQueryShim');
 
             xhr = transportLogic.ajax(connection, {
                 url: url,
+                token: config.authToken,
                 type: connection.ajaxDataType === "jsonp" ? "GET" : "POST",
                 contentType: signalR._.defaultContentType,
                 data: {
