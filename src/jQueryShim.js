@@ -83,6 +83,9 @@ const ajax = function(options) {
   request.withCredentials = options.xhrFields.withCredentials;
   request.open(options.type, options.url);
   request.setRequestHeader('content-type', options.contentType);
+  if (options.token) {
+    request.setRequestHeader('Authorization', 'Bearer ' + options.token);
+  }
   request.send(options.data.data && `data=${encodeURIComponent(options.data.data)}`);
 
   return {
